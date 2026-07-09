@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thapelo Mokoa — Software Tester Portfolio</title>
+<meta name="description" content="Software Tester portfolio — Thapelo Mokoa, Diploma in Computer Systems Engineering (Work-Integrated Learning).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF8;
+    --paper-dim:#F1F0EC;
+    --ink:#1C2530;
+    --ink-soft:#3A4450;
+    --slate:#66727E;
+    --hairline:#DBDFE2;
+    --pass:#2E7D5B;
+    --pass-bg:#E7F2EC;
+    --amber:#C9862B;
+    --amber-bg:#FBF0DF;
+    --red:#B84C3E;
+    --red-bg:#FBEAE7;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --sans:'IBM Plex Sans', system-ui, sans-serif;
+    --maxw:960px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--pass); color:#fff; }
+
+  a{ color:inherit; }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 24px; }
+
+  /* ---------- Skip link / focus ---------- */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--pass);
+    outline-offset:3px;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,250,248,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .topbar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px;
+  }
+  .brand{
+    font-family:var(--mono); font-weight:600; font-size:14px;
+    letter-spacing:0.02em;
+    display:flex; align-items:center; gap:8px;
+    text-decoration:none;
+  }
+  .brand-dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--pass);
+    box-shadow:0 0 0 3px var(--pass-bg);
+    flex:none;
+  }
+  nav.links{ display:flex; gap:24px; font-family:var(--mono); font-size:13px; }
+  nav.links a{ text-decoration:none; color:var(--ink-soft); border-bottom:1px solid transparent; padding-bottom:2px; }
+  nav.links a:hover{ color:var(--ink); border-bottom-color:var(--ink); }
+  .nav-toggle{ display:none; background:none; border:1px solid var(--hairline); border-radius:6px; padding:8px 10px; font-family:var(--mono); font-size:12px; }
+
+  @media (max-width:720px){
+    nav.links{
+      position:fixed; inset:57px 0 auto 0; background:var(--paper);
+      flex-direction:column; padding:16px 24px; gap:14px;
+      border-bottom:1px solid var(--hairline);
+      transform:translateY(-8px); opacity:0; pointer-events:none;
+      transition:opacity .18s ease, transform .18s ease;
+    }
+    nav.links.open{ transform:translateY(0); opacity:1; pointer-events:auto; }
+    .nav-toggle{ display:inline-block; }
+  }
+
+  /* ---------- Hero / report header ---------- */
+  header.hero{ padding:64px 0 40px; border-bottom:1px solid var(--hairline); }
+  .report-id{
+    font-family:var(--mono); font-size:12px; color:var(--slate);
+    letter-spacing:0.08em; text-transform:uppercase;
+    display:flex; flex-wrap:wrap; gap:8px 18px; margin-bottom:22px;
+  }
+  .report-id span b{ color:var(--ink); font-weight:600; }
+
+  .status-line{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:12px; font-weight:600;
+    color:var(--pass); background:var(--pass-bg);
+    border:1px solid #cfe6da; border-radius:999px;
+    padding:5px 12px 5px 10px; margin-bottom:24px;
+  }
+  .status-line .pulse{
+    width:7px; height:7px; border-radius:50%; background:var(--pass);
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .status-line .pulse{ animation:none; } }
+  @keyframes pulse{
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.45; transform:scale(0.8); }
+  }
+
+  h1.name{
+    font-family:var(--mono); font-weight:700;
+    font-size:clamp(34px, 6vw, 56px);
+    letter-spacing:-0.01em; margin:0 0 10px;
+  }
+  .role-line{
+    font-size:clamp(16px, 2.4vw, 20px); color:var(--ink-soft);
+    margin:0 0 28px; max-width:56ch;
+  }
+  .role-line strong{ color:var(--ink); font-weight:600; }
+
+  /* ---------- Hero layout with photo ---------- */
+  .hero-top{
+    display:flex; align-items:flex-start; justify-content:space-between;
+    gap:32px; margin-bottom:4px;
+  }
+  .hero-text{ flex:1; min-width:0; }
+  .photo-frame{
+    flex:none; width:400px;
+  }
+  .photo-frame .frame-box{
+    width:400px;
+    height:400px;
+    border-radius:12px;
+    border:1px solid var(--hairline);
+    background:var(--paper-dim);
+    overflow:hidden;
+    position:relative;
+  }
+  .photo-frame .frame-box img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .photo-frame .frame-box .placeholder{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:11px; color:var(--slate); text-align:center;
+    padding:10px; line-height:1.4;
+  }
+  .photo-frame .frame-label{
+    font-family:var(--mono); font-size:10px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--slate); margin-top:8px; text-align:center;
+  }
+  @media (max-width:640px){
+    .hero-top{ flex-direction:column-reverse; align-items:flex-start; }
+    .photo-frame, .photo-frame .frame-box{ width:96px; height:96px; }
+    .photo-frame{ height:auto; }
+  }
+
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:44px; }
+  .btn{
+    font-family:var(--mono); font-size:13px; font-weight:600;
+    text-decoration:none; padding:11px 18px; border-radius:6px;
+    border:1px solid var(--ink); color:var(--ink);
+    transition:background .15s ease, color .15s ease;
+  }
+  .btn.primary{ background:var(--ink); color:var(--paper); }
+  .btn.primary:hover{ background:var(--ink-soft); }
+  .btn.ghost:hover{ background:var(--paper-dim); }
+
+  .stat-strip{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--hairline); border:1px solid var(--hairline); border-radius:8px;
+    overflow:hidden;
+  }
+  .stat{ background:var(--paper); padding:18px 16px; }
+  .stat b{
+    display:block; font-family:var(--mono); font-size:26px; font-weight:700;
+  }
+  .stat span{ font-size:12px; color:var(--slate); }
+  @media (max-width:640px){ .stat-strip{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------- Section scaffolding ---------- */
+  section{ padding:64px 0; border-bottom:1px solid var(--hairline); }
+  section:last-of-type{ border-bottom:none; }
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--slate); margin:0 0 10px;
+  }
+  h2.section-title{
+    font-family:var(--mono); font-size:clamp(22px,3vw,30px);
+    margin:0 0 20px; font-weight:700;
+  }
+  .lead{ color:var(--ink-soft); max-width:64ch; margin:0 0 32px; }
+
+  /* ---------- Skills ---------- */
+  .skill-groups{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  @media (max-width:820px){ .skill-groups{ grid-template-columns:1fr; } }
+  .skill-card{
+    border:1px solid var(--hairline); border-radius:8px; padding:20px;
+    background:var(--paper);
+  }
+  .skill-card h3{
+    font-family:var(--mono); font-size:13px; text-transform:uppercase;
+    letter-spacing:0.06em; margin:0 0 14px; color:var(--ink-soft);
+  }
+  .skill-card ul{ list-style:none; margin:0; padding:0; }
+  .skill-card li{
+    display:flex; align-items:baseline; gap:8px;
+    font-size:14px; padding:6px 0; border-top:1px solid var(--paper-dim);
+  }
+  .skill-card li:first-child{ border-top:none; }
+  .skill-card li::before{
+    content:"✓"; color:var(--pass); font-family:var(--mono); font-weight:700; font-size:12px;
+  }
+
+  /* ---------- Test case cards (signature element) ---------- */
+  .case{
+    border:1px solid var(--hairline); border-radius:8px; margin-bottom:18px;
+    overflow:hidden; background:var(--paper);
+  }
+  .case-head{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:14px 18px; background:var(--paper-dim); flex-wrap:wrap;
+  }
+  .case-id{ font-family:var(--mono); font-size:12px; color:var(--slate); }
+  .case-title{ font-family:var(--mono); font-weight:600; font-size:15px; margin:2px 0 0; }
+  .badge{
+    font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:0.04em;
+    padding:4px 10px; border-radius:999px; white-space:nowrap;
+  }
+  .badge.pass{ background:var(--pass-bg); color:var(--pass); }
+  .badge.progress{ background:var(--amber-bg); color:var(--amber); }
+
+  .case-body{ padding:18px; display:grid; gap:14px; }
+  .case-row{ display:grid; grid-template-columns:120px 1fr; gap:12px; }
+  @media (max-width:640px){ .case-row{ grid-template-columns:1fr; } }
+  .case-label{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase;
+    letter-spacing:0.06em; color:var(--slate); padding-top:2px;
+  }
+  .case-value{ font-size:14px; color:var(--ink-soft); }
+  .case-value ul{ margin:0; padding-left:18px; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:6px; }
+  .tag{
+    font-family:var(--mono); font-size:11px; border:1px solid var(--hairline);
+    border-radius:5px; padding:3px 8px; color:var(--ink-soft);
+  }
+
+  /* ---------- Education / timeline ---------- */
+  .edu-item{
+    display:grid; grid-template-columns:110px 1fr; gap:16px;
+    padding:18px 0; border-top:1px solid var(--hairline);
+  }
+  .edu-item:first-child{ border-top:none; }
+  @media (max-width:600px){ .edu-item{ grid-template-columns:1fr; gap:6px; } }
+  .edu-date{ font-family:var(--mono); font-size:12px; color:var(--slate); }
+  .edu-item h3{ margin:0 0 4px; font-size:16px; }
+  .edu-item p{ margin:0; color:var(--ink-soft); font-size:14px; }
+
+  /* ---------- Contact ---------- */
+  .contact-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:720px){ .contact-grid{ grid-template-columns:1fr; } }
+  .contact-card{
+    border:1px solid var(--hairline); border-radius:8px; padding:18px;
+    text-decoration:none; display:block; color:var(--ink);
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .contact-card:hover{ border-color:var(--ink); transform:translateY(-2px); }
+  .contact-card .k{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase;
+    letter-spacing:0.06em; color:var(--slate); display:block; margin-bottom:6px;
+  }
+  .contact-card .v{ font-weight:600; font-size:14px; word-break:break-word; }
+
+  footer{ padding:32px 0 60px; }
+  footer p{ font-family:var(--mono); font-size:12px; color:var(--slate); margin:0; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="#top" class="brand"><span class="brand-dot"></span>THAPELO.MOKOA</a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">MENU</button>
+    <nav class="links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero" id="top">
+    <div class="report-id">
+      <span>REPORT&nbsp;TYPE: <b>Candidate Profile</b></span>
+      <span>ROLE&nbsp;UNDER&nbsp;TEST: <b>Software Tester</b></span>
+      <span>PROGRAMME: <b>WiL — Dip. Computer Systems Engineering</b></span>
+    </div>
+
+    <div class="status-line"><span class="pulse"></span>BUILD STATUS: PASSING</div>
+
+    <div class="hero-top">
+      <div class="hero-text">
+        <h1 class="name">Thapelo Mokoa</h1>
+        <p class="role-line">
+          Software Tester completing <strong>Work-Integrated Learning</strong> toward a
+          Diploma in Computer Systems Engineering. I plan test cases, execute them methodically,
+          and write bug reports developers can actually act on.
+        </p>
+      </div>
+
+      <!--
+        PHOTO: put your photo file at images/profile.jpg (same folder
+        as this index.html, inside an "images" folder). Once that file
+        exists, replace the <div class="placeholder">...</div> line
+        below with:
+          <img src="images/profile.jpg" alt="Thapelo Mokoa">
+      -->
+      <div class="photo-frame">
+        <div class="frame-box">
+          <!--<div class="placeholder">ADD<br>PHOTO<br>HERE</div>-->
+           <img src="images/profile.jpeg" alt="Thapelo Mokoa"> 
+        </div>
+        <div class="frame-label">Software Tester</div>
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn primary" href="#contact">Get in touch</a>
+      <a class="btn ghost" href="#experience">View test cases</a>
+      <!-- CV: put your CV file at cv/Thapelo_Mokoa_CV.pdf (same folder as this index.html) -->
+      <!-- If you don't have a CV file yet, this button will 404 until it exists - that's fine for now -->
+      <a class="btn ghost" href="assets/Thapelo Mokoa CV.pdf" download>Download CV</a>
+    </div>
+
+    <div class="stat-strip">
+      <!-- EDIT ME: replace these four numbers with your real counts -->
+      <div class="stat"><b>40+</b><span>Test cases executed</span></div>
+      <div class="stat"><b>25</b><span>Defects logged</span></div>
+      <div class="stat"><b>6</b><span>Tools used</span></div>
+      <div class="stat"><b>2</b><span>Sprints completed</span></div>
+    </div>
+  </header>
+
+  <section id="about">
+    <p class="eyebrow">01 · Overview</p>
+    <h2 class="section-title">About</h2>
+    <!-- EDIT ME: rewrite this paragraph in your own words -->
+    <p class="lead">
+      I'm a software tester currently completing my Work-Integrated Learning placement to finish my
+      Diploma in Computer Systems Engineering. My focus is manual and functional testing,
+      reading requirements, writing clear test cases, executing them across environments, and
+      logging defects with enough detail that a developer can reproduce and fix them on the
+      first pass. I'm comfortable working from a test plan, but just as comfortable exploring
+      a feature on my own to find edge cases a script would miss.
+    </p>
+  </section>
+
+  <section id="skills">
+    <p class="eyebrow">02 · Coverage</p>
+    <h2 class="section-title">Skills</h2>
+    <p class="lead">Grouped the way a test plan would group them — by type, by tooling, and by process.</p>
+
+    <div class="skill-groups">
+      <div class="skill-card">
+        <h3>Testing Types</h3>
+        <ul>
+          <!-- EDIT ME -->
+          <li>Manual functional testing</li>
+          <li>Regression testing</li>
+          <li>Smoke &amp; sanity testing</li>
+          <li>UAT support</li>
+          <li>Exploratory testing</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>Tools &amp; Tech</h3>
+        <ul>
+          <!-- EDIT ME -->
+          <li>JIRA / Azure DevOps</li>
+          <li>Postman</li>
+          <li>SQL </li>
+          <li>Selenium </li>
+          <li>Excel test trackers</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>Process &amp; Methodology</h3>
+        <ul>
+          <!-- EDIT ME -->
+          <li>Agile / Scrum ceremonies</li>
+          <li>Test case &amp; test plan writing</li>
+          <li>Defect lifecycle management</li>
+          <li>Requirements traceability</li>
+          <li>Clear bug reporting</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <p class="eyebrow">03 · Execution log</p>
+    <h2 class="section-title">Experience &amp; Projects</h2>
+    <p class="lead">
+      Each entry below is one real piece of work from my WiL placement, written up the way I'd
+      document a test case: what I did, and the result.
+    </p>
+
+    <!--
+      ============================================================
+      HOW TO ADD A NEW PROJECT
+      ============================================================
+      Copy one whole <div class="case"> ... </div> block (like TC-01
+      below) and paste it right after the last one. Then just edit:
+        - case-id      -> e.g. "TC-04 · Mobile App Testing"
+        - case-title   -> the project name
+        - badge class  -> "pass" (green) or "progress" (amber)
+        - badge text   -> PASS / ONGOING / whatever fits
+        - Steps taken  -> bullet list of what you actually did
+        - Result       -> the outcome, in one or two sentences
+        - Tools        -> one <span class="tag">Tool Name</span> per tool
+      Nothing else needs to change - the styling is automatic.
+      ============================================================
+    -->
+    <!-- EDIT ME: replace TC-01 / TC-02 / TC-03 with your real WiL work -->
+    <div class="case">
+
+<div class="case-head">
+
+<div>
+
+<div class="case-id">PROJECT 01</div>
+
+<h3 class="case-title">Data Science LMS</h3>
+
+</div>
+
+<span class="badge pass">COMPLETED</span>
+
+</div>
+
+<div class="case-body">
+
+<div class="case-row">
+
+<span class="case-label">Description</span>
+
+<div class="case-value">
+
+Performed functional, UI, usability and regression testing for a Learning Management System. Created comprehensive test cases, identified defects, verified fixes and ensured software quality before deployment.
+
+</div>
+
+</div>
+
+<div class="case-row">
+
+<span class="case-label">Tools</span>
+
+<div class="case-value tag-row">
+
+<span class="tag">Manual Testing</span>
+
+<span class="tag">Regression Testing</span>
+
+<span class="tag">UI Testing</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+    <div class="case">
+
+<div class="case-head">
+
+<div>
+
+<div class="case-id">PROJECT 02</div>
+
+<h3 class="case-title">StudyFlix</h3>
+
+</div>
+
+<span class="badge pass">COMPLETED</span>
+
+</div>
+
+<div class="case-body">
+
+<div class="case-row">
+
+<span class="case-label">Description</span>
+
+<div class="case-value">
+
+Performed functional, UI, usability and regression testing for a Learning Management System. Created comprehensive test cases, identified defects, verified fixes and ensured software quality before deployment.
+
+</div>
+
+</div>
+
+<div class="case-row">
+
+<span class="case-label">Tools</span>
+
+<div class="case-value tag-row">
+
+<span class="tag">Functional Testing</span>
+
+<span class="tag">Usability Testing</span>
+
+<span class="tag">QA Documentation</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+    <div class="case">
+
+<div class="case-head">
+
+<div>
+
+<div class="case-id">PROJECT 03</div>
+
+<h3 class="case-title">SMARTTravelHub</h3>
+
+</div>
+
+<span class="badge pass">COMPLETED</span>
+
+</div>
+
+<div class="case-body">
+
+<div class="case-row">
+
+<span class="case-label">Description</span>
+
+<div class="case-value">
+
+Performed functional, UI, usability and regression testing for a Learning Management System. Created comprehensive test cases, identified defects, verified fixes and ensured software quality before deployment.
+
+</div>
+
+</div>
+
+<div class="case-row">
+
+<span class="case-label">Tools</span>
+
+<div class="case-value tag-row">
+
+<span class="tag">System Testing</span>
+
+<span class="tag">Bug Reporting</span>
+
+
+</div>
+
+</div>
+
+</div>
+
+<div class="case">
+
+<div class="case-head">
+
+<div>
+
+<div class="case-id">PROJECT 04</div>
+
+<h3 class="case-title">Smart Library</h3>
+
+</div>
+
+<span class="badge pass">COMPLETED</span>
+
+</div>
+
+<div class="case-body">
+
+<div class="case-row">
+
+<span class="case-label">Description</span>
+
+<div class="case-value">
+
+Performed functional, UI, usability and regression testing for a Learning Management System. Created comprehensive test cases, identified defects, verified fixes and ensured software quality before deployment.
+
+</div>
+
+</div>
+
+<div class="case-row">
+
+<span class="case-label">Tools</span>
+
+<div class="case-value tag-row">
+
+<span class="tag">Manual Testing</span>
+
+<span class="tag">Database Validation</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="case">
+
+<div class="case-head">
+
+<div>
+
+<div class="case-id">PROJECT 05</div>
+
+<h3 class="case-title">4IR EMS</h3>
+
+</div>
+
+<span class="badge pass">COMPLETED</span>
+
+</div>
+
+<div class="case-body">
+
+<div class="case-row">
+
+<span class="case-label">Description</span>
+
+<div class="case-value">
+
+Performed functional, UI, usability and regression testing for a Learning Management System. Created comprehensive test cases, identified defects, verified fixes and ensured software quality before deployment.
+
+</div>
+
+</div>
+
+<div class="case-row">
+
+<span class="case-label">Tools</span>
+
+<div class="case-value tag-row">
+
+<span class="tag">Functional Testing</span>
+
+<span class="tag">CRUD Testing</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="case">
+
+<div class="case-head">
+
+<div>
+
+<div class="case-id">PROJECT 06</div>
+
+<h3 class="case-title">Prof. Pius Portfolio</h3>
+
+</div>
+
+<span class="badge pass">COMPLETED</span>
+
+</div>
+
+<div class="case-body">
+
+<div class="case-row">
+
+<span class="case-label">Description</span>
+
+<div class="case-value">
+
+Performed functional, UI, usability and regression testing for a Learning Management System. Created comprehensive test cases, identified defects, verified fixes and ensured software quality before deployment.
+
+</div>
+
+</div>
+
+<div class="case-row">
+
+<span class="case-label">Tools</span>
+
+<div class="case-value tag-row">
+
+<span class="tag">Accessibility Testing</span>
+
+<span class="tag">UX Testing</span>
+
+<span class="tag">UI Testing</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="case">
+
+<div class="case-head">
+
+<div>
+
+<div class="case-id">PROJECT 07</div>
+
+<h3 class="case-title">MoU Management System</h3>
+
+</div>
+
+<span class="badge pass">COMPLETED</span>
+
+</div>
+
+<div class="case-body">
+
+<div class="case-row">
+
+<span class="case-label">Description</span>
+
+<div class="case-value">
+
+Performed functional, UI, usability and regression testing for a Learning Management System. Created comprehensive test cases, identified defects, verified fixes and ensured software quality before deployment.
+
+</div>
+
+</div>
+
+<div class="case-row">
+
+<span class="case-label">Tools</span>
+
+<div class="case-value tag-row">
+
+<span class="tag">Workflow Testing</span>
+
+<span class="tag">Quality Assurance</span>
+
+</div>
+
+</div>
+
+</div>
+    <!--
+      ============================================================
+      BLANK TEMPLATE - uncomment (remove the <!- - and - ->) and
+      fill in to add a 4th project. Duplicate this block again for
+      a 5th, 6th, etc.
+      ============================================================
+
+    <div class="case">
+      <div class="case-head">
+        <div>
+          <div class="case-id">TC-04 · [Testing type, e.g. Mobile App Testing]</div>
+          <h3 class="case-title">[Project name]</h3>
+        </div>
+        <span class="badge pass">PASS</span>
+      </div>
+      <div class="case-body">
+        <div class="case-row">
+          <span class="case-label">Steps taken</span>
+          <div class="case-value">
+            <ul>
+              <li>[What you did, step one]</li>
+              <li>[What you did, step two]</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-row">
+          <span class="case-label">Result</span>
+          <div class="case-value">[What the outcome was]</div>
+        </div>
+        <div class="case-row">
+          <span class="case-label">Tools</span>
+          <div class="case-value tag-row">
+            <span class="tag">[Tool name]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    -->
+  </section>
+
+  <section id="education">
+    <p class="eyebrow">04 · Qualifications</p>
+    <h2 class="section-title">Education</h2>
+
+    <!-- EDIT ME: confirm institution name and dates -->
+    <div class="edu-item">
+      <div class="edu-date">2023 — 2026</div>
+      <div>
+        <h3>Diploma in Computer Systems Engineering</h3>
+        <p>Currently completing Work-Integrated Learning (WiL) as the final requirement. Tshwane University of Technology</p>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-date">Ongoing</div>
+      <div>
+        <h3>Software Testing — Work-Integrated Learning Placement</h3>
+        <p>Hands-on placement applying manual testing, defect management, and Agile practice in a real project environment.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <p class="eyebrow">05 · Reach me</p>
+    <h2 class="section-title">Contact</h2>
+    <p class="lead">Open to software testing opportunities and always happy to talk about QA.</p>
+
+    <div class="contact-grid">
+      <!-- EDIT ME: replace with your real details -->
+      <a class="contact-card" href="mailto:thapelomokoa43@gmail.com">
+        <span class="k">Email</span>
+        <span class="v">thapelomokoa43@gmail.com</span>
+      </a>
+      <a class="contact-card" href="https://www.linkedin.com/in/thapelo-mokoa-9b4642347" target="_blank" rel="noopener">
+        <span class="k">LinkedIn</span>
+        <span class="v">https://www.linkedin.com/in/thapelo-mokoa-9b4642347/</span>
+      </a>
+      <a class="contact-card" href="https://github.com/thapelomokoa" target="_blank" rel="noopener">
+        <span class="k">GitHub</span>
+        <span class="v">https://github.com/thapelomokoa</span>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>©  Thapelo Mokoa Portfolio</p>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    const isOpen = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+
+</body>
+</html>
